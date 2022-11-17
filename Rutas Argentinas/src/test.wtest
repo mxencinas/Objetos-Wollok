@@ -1,0 +1,65 @@
+import ruta.*
+import vehiculo.*
+import clima.*
+import rueda.*
+
+const rueda1 = new Rueda(nivelDesgaste = 13)
+const rueda2 = new Rueda(nivelDesgaste = 13)
+const rueda3 = new Rueda(nivelDesgaste = 35)
+const rueda4 = new Rueda(nivelDesgaste = 40)
+const ruedas = #{rueda1, rueda2, rueda3, rueda4}
+
+const ruta33 = new Ruta(kilometros = 100, tipo = new Asfalto(velocidadMaxima = 50))
+const camioneta = new VehiculoCarga(carga = 3, ruedas = ruedas)
+
+const ruedaNueva = new Rueda(nivelDesgaste = 0)
+
+const malone = new VehiculoCarga(carga = 50, ruedas = #{ruedaNueva})
+const ruta40 = new Ruta(kilometros = 0, tipo = ripio)
+
+test "velocidad vehiculo" 
+{
+	clima.resistenciaDelViento(15)
+	
+	assert.equals(65, camioneta.velocidadVehiculo())
+}
+
+test "velocidad final" 
+{
+	assert.equals(50, camioneta.velocidadFinal(ruta33))
+}
+
+test "tiempo" 
+{
+	assert.equals(2, camioneta.tiempo(ruta33))
+}
+
+test "viaje por ruta 33" 
+{
+	camioneta.viajar(ruta33)
+	
+	assert.equals(17, rueda1.nivelDesgaste())
+	assert.equals(17, rueda2.nivelDesgaste())
+	assert.equals(39, rueda3.nivelDesgaste())
+	assert.equals(44, rueda4.nivelDesgaste())
+}
+
+test "velocidad final malone" 
+{
+	clima.resistenciaDelViento(15)
+	
+	malone.viajar(ruta40)
+	
+	assert.equals(45, malone.velocidadFinal(ruta40))
+
+}
+
+test "desgaste de la rueda de malone" 
+{
+	clima.resistenciaDelViento(15)
+	
+	malone.viajar(ruta40)
+	
+	assert.equals(4.5 * 2, ruedaNueva.nivelDesgaste())
+
+}
