@@ -23,6 +23,8 @@ object pdepLibre
 		const cuponesInvalidos = usuario.cuponesInvalidos()
 		
 		cuponesInvalidos.forEach{cuponInvalido => usuario.quitarCupon(cuponInvalido)}
+		
+		// cupones.removeAllSuchThat({cupon => cupon.fueUsado()})
 	}
 	
 	method nombresDeOferta() = productos.map{producto => producto.nombreDeOferta()}

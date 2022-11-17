@@ -3,6 +3,12 @@ class Cupon
 {
 	var property estaUsado = false
 	const property porcentajeDescuento
+	
+	method usar(monto)
+	{
+		if (not estaUsado) return monto * (1 - porcentajeDescuento)
+		else return monto
+	}
 }
 
 
